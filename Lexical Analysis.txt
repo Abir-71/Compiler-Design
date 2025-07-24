@@ -1,0 +1,145 @@
+1.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    string input;
+    bool isNumeric = true;
+
+    cout << "Enter a value: ";
+    cin >> input;
+
+    for (int i = 0; input[i] != '\0'; i++) {
+        if (input[i] < '0' || input[i] > '9') {
+            isNumeric = false;
+            break;
+        }
+    }
+
+    if (isNumeric) {
+        cout << "Numeric constant" << endl;
+    } else {
+        cout << "Not numeric" << endl;
+    }
+
+    return 0;
+}
+ 
+
+2.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    string input;
+    char operators[10]; // To store found operators
+    int opIndex = 0;
+
+    cout << "Enter an expression: ";
+    cin >> input;
+
+    // Scan each character in input
+    for (int i = 0; input[i] != '\0'; i++) {
+        char ch = input[i];
+
+        if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '%' || ch == '=') {
+            operators[opIndex] = ch;
+            opIndex++;
+        }
+    }
+
+    if (opIndex > 0) {
+        for (int i = 0; i < opIndex; i++) {
+            cout << "operator" << i + 1 << ": " << operators[i] << endl;
+        }
+    } else {
+        cout << "No arithmetic operators found." << endl;
+    }
+
+    return 0;
+}
+
+
+3.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    string input;
+    char c;
+    string line = "";
+
+    cout << "Enter a line: ";
+
+
+    while (cin.get(c)) {
+        if (c == '\n') break;
+        line += c;
+    }
+
+    if (line.length() >= 2) {
+        if (line[0] == '/' && line[1] == '/') {
+            cout << "Single-line comment" << endl;
+        }
+        else if (line[0] == '/' && line[1] == '*') {
+            int len = line.length();
+            if (len >= 4 && line[len - 2] == '*' && line[len - 1] == '/') {
+                cout << "Multi-line comment" << endl;
+            } else {
+                cout << "Possibly incomplete multi-line comment" << endl;
+            }
+        }
+        else {
+            cout << "Not a comment" << endl;
+        }
+    }
+    else {
+        cout << "Not a comment" << endl;
+    }
+
+    return 0;
+}
+
+
+4.
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    string input;
+    bool isIdentifier = true;
+
+    cout << "Enter an identifier: ";
+    cin >> input;
+    char firstChar = input[0];
+    if (!((firstChar >= 'A' && firstChar <= 'Z') ||
+          (firstChar >= 'a' && firstChar <= 'z') ||
+          (firstChar == '_'))) {
+        isIdentifier = false;
+    }
+
+
+    for (int i = 1; input[i] != '\0'; i++) {
+        char ch = input[i];
+        if (!((ch >= 'A' && ch <= 'Z') ||
+              (ch >= 'a' && ch <= 'z') ||
+              (ch >= '0' && ch <= '9') ||
+              (ch == '_'))) {
+            isIdentifier = false;
+            break;
+        }
+    }
+
+    if (isIdentifier) {
+        cout << "Valid Identifier" << endl;
+    } else {
+        cout << "Invalid Identifier" << endl;
+    }
+
+    return 0;
+}
