@@ -1,0 +1,65 @@
+int x = 10;
+float y = 3.14;
+double z = 0.001;
+x = x + y;
+
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <regex>
+#include <vector>
+
+using namespace std;
+
+bool isDelimiter(char ch) {
+    string delimiters = "{}[](),;:";
+    return delimiters.find(ch) != string::npos;
+}
+
+bool isInteger(const string& token) {
+    regex intRegex("^[+-]?\\d+$");
+    return regex_match(token, intRegex);
+}
+
+bool isRealNumber(const string& token) {
+    regex realRegex("^[+-]?\\d*\\.\\d+$");
+    return regex_match(token, realRegex);
+}
+
+int main() {
+    ifstream file("program.txt");
+    if (!file.is_open()) {
+        cerr << "Could not open the file.\n";
+        return 1;
+    }
+
+    string line;
+    cout << "Detected Tokens:\n";
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string token;
+
+        while (ss >> token) {
+            string cleanToken;
+            for (char ch : token) {
+                if (isDelimiter(ch)) {
+                    cout << "Delimiter: " << ch << '\n';
+                } else {
+                    cleanToken += ch;
+                }
+            }
+
+            if (!cleanToken.empty()) {
+                if (isInteger(cleanToken)) {
+                    cout << "Integer: " << cleanToken << '\n';
+                } else if (isRealNumber(cleanToken)) {
+                    cout << "Real Number: " << cleanToken << '\n';
+                }
+            }
+        }
+    }
+
+    file.close();
+    return 0;
+}
